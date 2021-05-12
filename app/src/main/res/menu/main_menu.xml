@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_cases_item"
+        android:title="@string/add_cases"
+        android:icon="@drawable/ic_menu"/>
+    <item
+        android:id="@+id/open_cases_item"
+        android:title="@string/open_cases"
+        android:icon="@drawable/ic_search"/>
+    <item
+        android:id="@+id/case_locations_item"
+        android:title="@string/case_locations"
+        android:icon="@drawable/ic_location"/>
+</menu>
