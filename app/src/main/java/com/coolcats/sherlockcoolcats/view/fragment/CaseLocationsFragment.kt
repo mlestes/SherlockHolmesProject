@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.coolcats.sherlockcoolcats.R
 import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.view.adapter.CaseAdapter
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -94,7 +95,8 @@ class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCa
         val latLng = LatLng(userLocation.latitude, userLocation.longitude)
         googleMap.addMarker(MarkerOptions().position(latLng).title("Sherlock"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        Log.d("TAG_X", "MapReady...!")
+        //Log.d("TAG_X", "MapReady...!")
+        myLog("MapReady...!")
     }
 
     override fun onLocationChanged(p0: Location) {

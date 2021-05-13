@@ -39,7 +39,7 @@ class AppFragment: Fragment() {
 
                      SherlockFragment.OPEN_CASES -> inflater.inflate(R.layout.open_cases_fragment_layout, container, false)
 
-                    SherlockFragment.NEW_CASES -> inflater.inflate(R.layout.closed_cases_fragment_layout, container, false)
+                    SherlockFragment.NEW_CASES -> inflater.inflate(R.layout.new_cases_fragment_layout, container, false)
 
                     else ->
                         inflater.inflate(R.layout.case_locations_fragment_layout, container, false)
