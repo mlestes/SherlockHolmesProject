@@ -21,22 +21,24 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_user_case_input.*
 
-class UserCaseInputFragment(private val caseLocationInputDelegate: CaseLocationInputDelegate) :
+class UserCaseInputFragment() :
     Fragment(), LocationListener, GoogleMap.OnMapClickListener {
 
     //private class globals
     private lateinit var googleMap: GoogleMap
     private lateinit var locationManager: LocationManager
-    private lateinit var userLocation: Location
+    private lateinit var userLocation: LatLng
 
-    //delegate for retrieving latlng from input map
-    interface CaseLocationInputDelegate {
-        fun getLatLng(latLng: LatLng): LatLng
-    }
+//    //delegate for retrieving latlng from input map
+//    interface CaseLocationInputDelegate {
+//        fun getLatLng(latLng: LatLng): LatLng
+//    }
 
     //required for initializing input map
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
+        if(this.googleMap == null) myLog("ME: map null")
+        else myLog("ME: map data")
         this.googleMap.setOnMapClickListener(this)
         myLog("ME: Input Map is Ready")
     }
@@ -56,7 +58,7 @@ class UserCaseInputFragment(private val caseLocationInputDelegate: CaseLocationI
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         //gets map
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        val mapFragment = childFragmentManager.findFragmentById(R.id.input_map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
         //button for searching a particular latlng
@@ -66,19 +68,17 @@ class UserCaseInputFragment(private val caseLocationInputDelegate: CaseLocationI
                 long_edit_txt.text.toString().toDouble()
             )
             myLog("ME: Input Map Search Loc: $latLng")
-            userLocation.longitude = latLng.longitude
-            userLocation.latitude = latLng.latitude
-            updateLocation(userLocation)
+            updateLocation(latLng)
         }
 
         //button for submitting latlng and closing fragment
         submit_location_btn.setOnClickListener {
             val latlng = LatLng(userLocation.latitude, userLocation.longitude)
             myLog("ME: Input Map Submitting: $latlng")
-            caseLocationInputDelegate.getLatLng(latlng)
+//            caseLocationInputDelegate.getLatLng(latlng)
 
             //needed only if this fragment opened on top of input view.
-            requireActivity().supportFragmentManager.popBackStack()
+//            requireActivity().supportFragmentManager.popBackStack()
         }
 
     }
@@ -92,11 +92,10 @@ class UserCaseInputFragment(private val caseLocationInputDelegate: CaseLocationI
     }
 
     //updates internal userLocation value
-    private fun updateLocation(userLocation: Location) {
+    private fun updateLocation(userLocation: LatLng) {
         this.userLocation = userLocation
-        val latlng = LatLng(this.userLocation.latitude, this.userLocation.longitude)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng))
-        myLog("ME: Input Map updated to: $latlng")
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
+        myLog("ME: Input Map updated to: $userLocation")
     }
 
     //required operations at onStart()
@@ -114,11 +113,10 @@ class UserCaseInputFragment(private val caseLocationInputDelegate: CaseLocationI
     //behaviour for when user clicks on map
     override fun onMapClick(latlng: LatLng) {
         myLog("ME: Input Map Clicked: $latlng")
+        googleMap.clear()
         googleMap.addMarker(MarkerOptions().position(latlng))
         lat_edit_txt.text = latlng.latitude.toString().toEditable()
         long_edit_txt.text = latlng.longitude.toString().toEditable()
-        userLocation.latitude = latlng.latitude
-        userLocation.longitude = latlng.longitude
-        updateLocation(userLocation)
+        updateLocation(latlng)
     }
 }
