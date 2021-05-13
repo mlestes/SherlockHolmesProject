@@ -76,6 +76,8 @@ class UserCaseInputFragment(private val caseLocationInputDelegate: CaseLocationI
             val latlng = LatLng(userLocation.latitude, userLocation.longitude)
             myLog("ME: Input Map Submitting: $latlng")
             caseLocationInputDelegate.getLatLng(latlng)
+
+            //needed only if this fragment opened on top of input view.
             requireActivity().supportFragmentManager.popBackStack()
         }
 
