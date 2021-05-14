@@ -37,10 +37,10 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
         super.onViewCreated(view, savedInstanceState)
         open_cases_recyclerview.adapter = adapter
         val list = mutableListOf(
-                Case("The mystery of the missing shoe.", 1, LatLng(-34.0, 151.0), true),
-                Case("The hound of Baskerville", 2, LatLng(-34.55, 151.0), true),
-                Case("The missing charger.", 3, LatLng(-34.4, 150.0), true),
-                Case("Mystery at the headquarters", 4, LatLng(33.9085, -84.4782), true)
+                Case(1, "The mystery of the missing shoe.", LatLng(-34.0, 151.0), true),
+                Case(2,"The hound of Baskerville", LatLng(-34.55, 151.0), true),
+                Case(3,"The missing charger.", LatLng(-34.4, 150.0), true),
+                Case(4, "Mystery at the headquarters", LatLng(33.9085, -84.4782), true)
         )
         adapter.updateList(list)
     }
