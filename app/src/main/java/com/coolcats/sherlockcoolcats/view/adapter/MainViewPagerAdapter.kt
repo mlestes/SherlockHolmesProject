@@ -16,11 +16,8 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdap
     override fun getCount(): Int = 3
 
     override fun getItem(position: Int): Fragment {
-//        if (position == 0) return UserInputFragment()
-//        else if (position == 1) return OpenCasesFragment()
-//        else return CaseLocationsFragment()
         when(position){
-            0 -> return UserCaseInputFragment()
+            0 -> return UserInputFragment()
             1 -> return OpenCasesFragment()
             2 -> return CaseLocationsFragment()
             else -> return UserInputFragment()
