@@ -1,4 +1,6 @@
 package com.coolcats.sherlockcoolcats.view.fragment
 
-class UserInputFragment {
+import androidx.fragment.app.Fragment
+
+class UserInputFragment: Fragment() {
 }
