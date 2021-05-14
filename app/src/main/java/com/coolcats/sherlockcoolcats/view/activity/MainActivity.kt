@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.coolcats.sherlockcoolcats.R
+import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.view.adapter.MainViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
+                myLog("Bottom nav: ${position.toString()}")
                 when (position) {
                     0 -> bottom_nav.selectedItemId = R.id.add_cases_item
                     1 -> bottom_nav.selectedItemId = R.id.open_cases_item
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
     }
 
     override fun onStart() {

@@ -1,5 +1,6 @@
 package com.coolcats.sherlockcoolcats.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.coolcats.sherlockcoolcats.R
 import com.coolcats.sherlockcoolcats.model.Case
+import java.lang.Exception
 
 class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : RecyclerView.Adapter<OpenCasesAdapter.OpenCaseViewHolder>() {
 
@@ -38,7 +40,12 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
                 this.findViewById<TextView>(R.id.case_long_textview).text = it.latLong.longitude.toString()
                 this.findViewById<TextView>(R.id.case_lat_textview).text = it.latLong.latitude.toString()
                 this.findViewById<Button>(R.id.case_solved_button).setOnClickListener() {
-                    openCaseDelegate.setOpenCaseToSolved(openCaseList[position])
+                   try {
+                       openCaseDelegate.setOpenCaseToSolved(openCaseList[position])
+                   } catch (e: Exception)
+                   {
+                       Log.d("JEFF says...",e.toString())
+                   }
                 }
             }
         }
