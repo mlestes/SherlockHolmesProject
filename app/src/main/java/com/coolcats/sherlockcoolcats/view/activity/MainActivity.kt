@@ -40,16 +40,16 @@ class MainActivity : AppCompatActivity() {
 
         adapter = MainViewPagerAdapter(supportFragmentManager)
         main_viewpager.adapter = adapter
+        main_viewpager.offscreenPageLimit = 2
 
         //Added an observer on the LiveData returned by getAllCases
         //The onChange() method fires when the observed data changes
         //and the activity is in the foreground.
-        /*caseViewModel.allCases.observe(owner = this){ cases ->
-            //Update the cached cody of the words in the adapter
-            //ToDo need the  CaseListAdapter from the RecycleView Piece
-            //cases.let{ adapter.submitList(it)}
-        }
-        */
+//        caseViewModel.allCases.observe(owner = this){ cases ->
+//            //Update the cached cody of the words in the adapter
+//            //ToDo need the  CaseListAdapter from the RecycleView Piece
+//            //cases.let{ adapter.submitList(it)}
+//        }
 
         main_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(

@@ -24,4 +24,8 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapt
         }
     }
 
+//    fun submitList(it: MutableList<Case>) {
+//
+//    }
+
 }

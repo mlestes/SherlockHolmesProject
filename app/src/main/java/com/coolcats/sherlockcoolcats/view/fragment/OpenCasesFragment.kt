@@ -1,15 +1,23 @@
 package com.coolcats.sherlockcoolcats.view.fragment
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.coolcats.sherlockcoolcats.R
 import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.CaseApplication
+import com.coolcats.sherlockcoolcats.util.myLog
+import com.coolcats.sherlockcoolcats.view.activity.MainActivity
 import com.coolcats.sherlockcoolcats.view.adapter.OpenCasesAdapter
+import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
+import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModelFactory
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.open_cases_fragment_layout.*
 import java.lang.Exception
@@ -17,11 +25,21 @@ import java.lang.Exception
 class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
 
     private val adapter = OpenCasesAdapter(this)
+    private val caseViewModel : CaseViewModel by viewModels{CaseViewModelFactory((requireActivity().application as CaseApplication).repository)}
+//    private val caseViewModel: CaseViewModel by viewModels()
+    private var list: MutableList<Case> = mutableListOf()
 
     override fun setOpenCaseToSolved(case: Case) {
         try {
+            case.solved = true
+            caseViewModel.update(case)
+            try{
+                    if(!caseViewModel.allCases.value.isNullOrEmpty())   adapter.updateList(caseViewModel.allCases.value!!)
+                }
+             catch(e: Exception){}
+
             Toast.makeText(activity?.baseContext,case.caseNumber.toString() + ": " + case.caseTitle,Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) { /* do nothing */ }
+        } catch (e: Exception){}
         //TODO("Not yet implemented")
     }
 
@@ -36,13 +54,19 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         open_cases_recyclerview.adapter = adapter
-        val list = mutableListOf(
-                Case("The mystery of the missing shoe.", 1, LatLng(-34.0, 151.0), true),
-                Case("The hound of Baskerville", 2, LatLng(-34.55, 151.0), true),
-                Case("The missing charger.", 3, LatLng(-34.4, 150.0), true),
-                Case("Mystery at the headquarters", 4, LatLng(33.9085, -84.4782), true)
-        )
+//        if(caseViewModel.allCases.value == null)
+//            myLog("CaseList: null")
+//        else
+//            myLog("CaseList: ${caseViewModel.allCases.value!!.size.toString()}")
+        myLog("Creating OpenCaseList in OpenCaseFragment")
+        caseViewModel.allCases.observe(requireActivity()) { list ->
+            list.let {
+                adapter.updateList(it)
+            }
+        }
+//        list = caseViewModel.allCases.value!!
+//        list.add(Case(1, "Paint off", 0.0, 0.0, false))
+//        list.add(Case(2, "Haters gotta hate", -99.99, 99.99, true))
         adapter.updateList(list)
     }
-
 }

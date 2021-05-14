@@ -19,7 +19,7 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
         fun setOpenCaseToSolved(case: Case)
     }
 
-    fun updateList(list: List<Case>){
+    fun updateList(list: MutableList<Case>){
         this.openCaseList = list
         notifyDataSetChanged()
     }
@@ -37,8 +37,8 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
             holder.itemView.apply {
                 this.findViewById<TextView>(R.id.case_number_textview).text = it.caseNumber.toString()
                 this.findViewById<TextView>(R.id.case_title_textview).text = it.caseTitle
-                this.findViewById<TextView>(R.id.case_long_textview).text = it.latLong.longitude.toString()
-                this.findViewById<TextView>(R.id.case_lat_textview).text = it.latLong.latitude.toString()
+                this.findViewById<TextView>(R.id.case_long_textview).text = it.longitude.toString()
+                this.findViewById<TextView>(R.id.case_lat_textview).text = it.latitude.toString()
                 this.findViewById<Button>(R.id.case_solved_button).setOnClickListener() {
                    try {
                        openCaseDelegate.setOpenCaseToSolved(openCaseList[position])

@@ -3,6 +3,7 @@ package com.coolcats.sherlockcoolcats.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.google.android.gms.maps.model.LatLng
 
 @Entity(tableName = "case_table")
@@ -13,8 +14,14 @@ data class Case(
     @ColumnInfo(name = "case_title")
     var caseTitle: String = "",
 
-    @ColumnInfo(name ="case_location")
-    var latLong: LatLng,
+//    @ColumnInfo(name ="case_location")
+//    var latLong: LatLng,
+
+    @ColumnInfo(name = "latitude")
+    var latitude: Double,
+
+    @ColumnInfo(name = "longitude")
+    var longitude: Double,
 
     @ColumnInfo(name = "case_status")
     var solved: Boolean = false
