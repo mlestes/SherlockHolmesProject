@@ -1,35 +1,46 @@
 package com.coolcats.sherlockcoolcats.view.fragment
 
-import androidx.fragment.app.Fragment
-
+import android.annotation.SuppressLint
+import android.content.Context
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.coolcats.sherlockcoolcats.R
-
+import com.coolcats.sherlockcoolcats.util.myLog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.fragment_user_case_input.*
 
-class UserCaseInputFragment : Fragment() {
+class UserCaseInputFragment() :
+    Fragment(), LocationListener, GoogleMap.OnMapClickListener {
 
+    //private class globals
+    private lateinit var googleMap: GoogleMap
+    private lateinit var locationManager: LocationManager
+    private lateinit var userLocation: LatLng
+
+//    //delegate for retrieving latlng from input map
+//    interface CaseLocationInputDelegate {
+//        fun getLatLng(latLng: LatLng): LatLng
+//    }
+
+    //required for initializing input map
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        this.googleMap = googleMap
+        if(this.googleMap == null) myLog("ME: map null")
+        else myLog("ME: map data")
+        this.googleMap.setOnMapClickListener(this)
+        myLog("ME: Input Map is Ready")
     }
 
     override fun onCreateView(
@@ -42,7 +53,70 @@ class UserCaseInputFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+        locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        //gets map
+        val mapFragment = childFragmentManager.findFragmentById(R.id.input_map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        //button for searching a particular latlng
+        loc_search_btn.setOnClickListener {
+            val latLng = LatLng(
+                lat_edit_txt.text.toString().toDouble(),
+                long_edit_txt.text.toString().toDouble()
+            )
+            myLog("ME: Input Map Search Loc: $latLng")
+            updateLocation(latLng)
+        }
+
+        //button for submitting latlng and closing fragment
+        submit_location_btn.setOnClickListener {
+            val latlng = LatLng(userLocation.latitude, userLocation.longitude)
+            myLog("ME: Input Map Submitting: $latlng")
+//            caseLocationInputDelegate.getLatLng(latlng)
+
+            //needed only if this fragment opened on top of input view.
+//            requireActivity().supportFragmentManager.popBackStack()
+        }
+
+    }
+
+    //used to update latlng edittexts values
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
+    //does nothing
+    override fun onLocationChanged(location: Location) {
+        //do nothing
+    }
+
+    //updates internal userLocation value
+    private fun updateLocation(userLocation: LatLng) {
+        this.userLocation = userLocation
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
+        myLog("ME: Input Map updated to: $userLocation")
+    }
+
+    //required operations at onStart()
+    @SuppressLint("MissingPermission")
+    override fun onStart() {
+        super.onStart()
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            5000L,
+            5f,
+            this
+        )
+    }
+
+    //behaviour for when user clicks on map
+    override fun onMapClick(latlng: LatLng) {
+        myLog("ME: Input Map Clicked: $latlng")
+        googleMap.clear()
+        googleMap.addMarker(MarkerOptions().position(latlng))
+        lat_edit_txt.text = latlng.latitude.toString().toEditable()
+        long_edit_txt.text = latlng.longitude.toString().toEditable()
+        updateLocation(latlng)
     }
 }

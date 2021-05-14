@@ -10,7 +10,10 @@ import com.coolcats.sherlockcoolcats.view.fragment.CaseLocationsFragment
 import com.coolcats.sherlockcoolcats.view.fragment.OpenCasesFragment
 import com.coolcats.sherlockcoolcats.view.fragment.UserInputFragment
 
-class MainViewPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class MainViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
+    fragmentManager,
+    FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+) {
 
     override fun getCount(): Int = 3
 

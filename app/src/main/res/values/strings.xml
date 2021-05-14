@@ -5,4 +5,5 @@
     <string name="case_locations">Case Locations</string>
     <string name="add_cases">Add Cases</string>
     <string name="solved">SOLVED</string>
+    <string name="submit_location">Submit Location</string>
 </resources>

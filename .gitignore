@@ -1,5 +1,7 @@
+.gitignore
 *.iml
 .gradle
+/app/src/debug/res/values/google_maps_api.xml
 /local.properties
 /.idea/caches
 /.idea/libraries
