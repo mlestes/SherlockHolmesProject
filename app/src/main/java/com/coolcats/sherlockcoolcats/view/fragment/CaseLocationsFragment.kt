@@ -68,10 +68,7 @@ class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCa
         }
 
         val list = mutableListOf<Case>(
-            Case("The mystery of the missing shoe.", 1,LatLng(-34.0, 151.0), true),
-            Case("The hound of Baskerville", 2,LatLng(-34.55, 151.0), true),
-            Case("The missing charger.", 3, LatLng(-34.4, 150.0), true),
-            Case("Mystery at the headquarters", 4, LatLng(33.9085, -84.4782), true)
+
         )
 
         adapter.caseList = list
