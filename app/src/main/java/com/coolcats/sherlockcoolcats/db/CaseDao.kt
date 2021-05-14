@@ -1,6 +1,7 @@
 package com.coolcats.sherlockcoolcats.db
 
 import androidx.room.*
+import androidx.room.Dao
 import com.coolcats.sherlockcoolcats.model.Case
 import kotlinx.coroutines.flow.Flow
 
