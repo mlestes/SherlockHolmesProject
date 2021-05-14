@@ -3,6 +3,7 @@ package com.coolcats.sherlockcoolcats.view.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.coolcats.sherlockcoolcats.model.Case
 import com.coolcats.sherlockcoolcats.view.fragment.AppFragment
 import com.coolcats.sherlockcoolcats.view.fragment.CaseLocationsFragment
 
@@ -17,4 +18,5 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapt
             else -> CaseLocationsFragment()
         }
     }
+
 }

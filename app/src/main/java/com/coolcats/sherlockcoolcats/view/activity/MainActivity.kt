@@ -5,12 +5,17 @@ import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.location.LocationManager
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.coolcats.sherlockcoolcats.R
+import androidx.lifecycle.observe
+import com.coolcats.sherlockcoolcats.model.CaseApplication
 import com.coolcats.sherlockcoolcats.view.adapter.MainViewPagerAdapter
+import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
+import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,15 +24,31 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var locationManager: LocationManager
 
+    //To create the ViewModel we used the viewModels delegate, passing in
+    //an instance of our CaseViewModelFactory which is constructed
+    //based on the repository retrieved from the CaseApplication
+    private val caseViewModel : CaseViewModel by viewModels{
+        CaseViewModelFactory((application as CaseApplication).repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         adapter = MainViewPagerAdapter(supportFragmentManager)
         main_viewpager.adapter = adapter
+
+        //Added an observer on the LiveData returned by getAllCases
+        //The onChange() method fires when the observed data changes
+        //and the activity is in the foreground.
+        /*caseViewModel.allCases.observe(owner = this){ cases ->
+            //Update the cached cody of the words in the adapter
+            //ToDo need the  CaseListAdapter from the RecycleView Piece
+            //cases.let{ adapter.submitList(it)}
+        }
+        */
 
         main_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
