@@ -2,38 +2,53 @@ package com.coolcats.sherlockcoolcats.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.coolcats.sherlockcoolcats.R
+import com.coolcats.sherlockcoolcats.db.CaseDao
+import com.coolcats.sherlockcoolcats.db.CaseRepository
 import com.coolcats.sherlockcoolcats.model.Case
 import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.view.adapter.CaseAdapter
-
+import com.coolcats.sherlockcoolcats.view.adapter.SolvedCaseAdapter
+import com.coolcats.sherlockcoolcats.view.adapter.UnsolvedCaseAdapter
+import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.case_item_layout.view.*
 import kotlinx.android.synthetic.main.fragment_case_locations.*
 
-class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCaseDelegate {
+
+
+class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.SolCaseDelegate, UnsolvedCaseAdapter.UnSolvedCaseDelegate {
+
 
     private lateinit var googleMap: GoogleMap
 
     private lateinit var locationManager: LocationManager
 
-    private val adapter = CaseAdapter(this)
+    private lateinit var adapter : SolvedCaseAdapter
+   // private lateinit var  unsolvedAdapter : UnsolvedCaseAdapter
+    private val solveList = ArrayList<Case>()
+
+
+
+
 
     private val callback = OnMapReadyCallback { googleMap ->
 //        val sydney = LatLng(-34.0, 151.0)
@@ -47,6 +62,8 @@ class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCa
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_case_locations, container, false)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,16 +79,28 @@ class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCa
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
+
+         adapter= SolvedCaseAdapter(solveList)
+       //  unsolvedAdapter = UnsolvedCaseAdapter(solveList)
+
+
+
         case_recyclerview.adapter = adapter
-        val sHelper = LinearSnapHelper().also {
-            it.attachToRecyclerView(case_recyclerview)
-        }
 
-        val list = mutableListOf<Case>(
 
-        )
+    //    unsolved_recyclerview.adapter = unsolvedAdapter
 
-        adapter.caseList = list
+
+
+
+//        val list = mutableListOf<Case>(
+//
+//            Case( 1,"w",LatLng(-34.0, 151.0), false)
+//
+//            )
+//        unsolvedAdapter.updateList(list)
+
+
     }
 
     @SuppressLint("MissingPermission")
@@ -97,17 +126,32 @@ class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCa
     }
 
     override fun onLocationChanged(p0: Location) {
+
         updateLocation(p0)
+
     }
 
     override fun openSolvedCase(case: Case) {
+
+        Toast.makeText(requireContext(), case.caseTitle, Toast.LENGTH_SHORT).show()
+        navigateToAndMark(case)
+       // adapter.caseList.set(case.caseNumber,case)
+    }
+
+    private fun navigateToAndMark(case: Case) {
+
+        googleMap.clear()
+        googleMap.addMarker(MarkerOptions().position(case.latLong).title(case.caseTitle).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLong))
+
+    }
+
+    override fun closedSolvedCase(case: Case) {
         Toast.makeText(requireContext(), case.caseTitle, Toast.LENGTH_SHORT).show()
         navigateToAndMark(case)
     }
 
-    private fun navigateToAndMark(case: Case) {
-        googleMap.clear()
-        googleMap.addMarker(MarkerOptions().position(case.latLong).title(case.caseTitle))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLong))
-    }
+
 }
+
+
