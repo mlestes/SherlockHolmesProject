@@ -19,25 +19,25 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.fragment_user_case_input.*
+import kotlinx.android.synthetic.main.map_input_fragment.*
 
-class UserCaseInputFragment() :
+class MapInputFragment(private val mapInputDelegate: MapInputFragment.MapInputDelegate) :
     Fragment(), LocationListener, GoogleMap.OnMapClickListener {
 
     //private class globals
     private lateinit var googleMap: GoogleMap
     private lateinit var locationManager: LocationManager
-    private lateinit var userLocation: LatLng
+    private var userLocation: LatLng? = null
 
-//    //delegate for retrieving latlng from input map
-//    interface CaseLocationInputDelegate {
-//        fun getLatLng(latLng: LatLng): LatLng
-//    }
+    //    //delegate for retrieving latlng from input map
+    interface MapInputDelegate {
+        fun getLatLng(latLng: LatLng)
+    }
 
     //required for initializing input map
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
-        if(this.googleMap == null) myLog("ME: map null")
+        if (this.googleMap == null) myLog("ME: map null")
         else myLog("ME: map data")
         this.googleMap.setOnMapClickListener(this)
         myLog("ME: Input Map is Ready")
@@ -48,7 +48,7 @@ class UserCaseInputFragment() :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_user_case_input, container, false)
+        return inflater.inflate(R.layout.map_input_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +58,8 @@ class UserCaseInputFragment() :
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         //gets map
-        val mapFragment = childFragmentManager.findFragmentById(R.id.input_map) as SupportMapFragment?
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.input_map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
         //button for searching a particular latlng
@@ -73,12 +74,15 @@ class UserCaseInputFragment() :
 
         //button for submitting latlng and closing fragment
         submit_location_btn.setOnClickListener {
-            val latlng = LatLng(userLocation.latitude, userLocation.longitude)
-            myLog("ME: Input Map Submitting: $latlng")
-//            caseLocationInputDelegate.getLatLng(latlng)
+            this.userLocation?.let {
+                val latlng = LatLng(it.latitude, it.longitude)
+                myLog("ME: Input Map Submitting: $latlng")
+                mapInputDelegate.getLatLng(latlng)
 
-            //needed only if this fragment opened on top of input view.
+                //needed only if this fragment opened on top of input view.
 //            requireActivity().supportFragmentManager.popBackStack()
+            }
+
         }
 
     }
