@@ -38,7 +38,7 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
                 this.findViewById<TextView>(R.id.case_number_textview).text = it.caseNumber.toString()
                 this.findViewById<TextView>(R.id.case_title_textview).text = it.caseTitle
                 this.findViewById<TextView>(R.id.case_long_textview).text = "long: " + it.longitude.toString()
-                this.findViewById<TextView>(R.id.case_lat_textview).text = "lat: " + it.latitude.toString()
+                this.findViewById<TextView>(R.id.case_lat_textview).text = "lat: " +  it.latitude.toString()
 
                 myLog("Creating image of :>>" + it.latitude + "<<, >>" + it.longitude+"<<")
 

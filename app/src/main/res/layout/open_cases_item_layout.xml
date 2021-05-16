@@ -46,6 +46,7 @@
             app:layout_constraintEnd_toStartOf="@id/case_long_textview"
             tools:text="Latitude"
             />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/case_long_textview"
             android:layout_width="0dp"
@@ -57,20 +58,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Longitude"
             />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/case_solved_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@id/case_lat_textview"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:drawableStart="@drawable/ic_success"
             android:background="@drawable/open_case_item_solve_button"
+            android:drawableStart="@drawable/ic_success"
+            android:padding="8dp"
+            android:text="@string/solved"
             android:textColor="@color/white"
-            android:text="@string/solved"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/case_long_textview"/>
 <!--        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/location_clip_imageview"
             tools:src="@tools:sample/avatars"
