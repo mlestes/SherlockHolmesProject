@@ -14,10 +14,12 @@ class CaseViewModel(private val repository: CaseRepository) : ViewModel() {
     // -The respository is completely separated from the UI through the ViewModel
     val allCases: LiveData<MutableList<Case>> = repository.allCases.asLiveData()
 
+
     /*
      * Launching a new coroutine to insert the data in a non-blocking manner
      */
     fun insert(case: Case) = viewModelScope.launch {
+
         repository.insert(case)
     }
 
