@@ -94,14 +94,19 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
     }
 
     @SuppressLint("MissingPermission")
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         locationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
             5000L,
             5f,
             this
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        locationManager.removeUpdates(this)
     }
 
     private lateinit var userLocation: Location

@@ -6,7 +6,6 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.map_input_fragment.*
 
 class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
     Fragment(), LocationListener, GoogleMap.OnMapClickListener {
@@ -60,33 +58,10 @@ class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
             childFragmentManager.findFragmentById(R.id.input_map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
-        //button for searching a particular latlng
-        loc_search_btn.setOnClickListener {
-            val latLng = LatLng(
-                lat_edit_txt.text.toString().toDouble(),
-                long_edit_txt.text.toString().toDouble()
-            )
-            myLog("ME: Input Map Search Loc: $latLng")
-            updateLocation(latLng)
-        }
-
-        //button for submitting latlng and closing fragment
-        submit_location_btn.setOnClickListener {
-            this.userLocation?.let {
-                val latlng = LatLng(it.latitude, it.longitude)
-                myLog("ME: Input Map Submitting: $latlng")
-                mapInputDelegate.getLatLng(latlng)
-
-                //needed only if this fragment opened on top of input view.
-//            requireActivity().supportFragmentManager.popBackStack()
-            }
-
-        }
-
     }
 
     //used to update latlng edittexts values
-    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+//    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     //does nothing
     override fun onLocationChanged(location: Location) {
@@ -118,8 +93,6 @@ class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
         myLog("ME: Input Map Clicked: $latlng")
         googleMap.clear()
         googleMap.addMarker(MarkerOptions().position(latlng))
-        lat_edit_txt.text = latlng.latitude.toString().toEditable()
-        long_edit_txt.text = latlng.longitude.toString().toEditable()
         updateLocation(latlng)
     }
 }

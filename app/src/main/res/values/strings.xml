@@ -6,4 +6,8 @@
     <string name="add_cases">Add Cases</string>
     <string name="solved">SOLVED</string>
     <string name="submit_location">Submit Location</string>
+    <string name="submit_case">Submit Case</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="add_case_name">Add Case name</string>
 </resources>
