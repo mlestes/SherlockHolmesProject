@@ -80,7 +80,7 @@ class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
         myLog("ME: Input Map updated to: $userLocation")
     }
 
-    //required operations at onStart()
+/*    //required operations at onStart()
     @SuppressLint("MissingPermission")
     override fun onStart() {
         super.onStart()
@@ -90,7 +90,7 @@ class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
             5f,
             this
         )
-    }
+    }*/
 
     //behaviour for when user clicks on map
     override fun onMapClick(latlng: LatLng) {

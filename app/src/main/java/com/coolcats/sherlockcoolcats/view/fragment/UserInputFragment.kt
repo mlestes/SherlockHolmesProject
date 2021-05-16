@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.coolcats.sherlockcoolcats.R
 import com.coolcats.sherlockcoolcats.model.Case
 import com.coolcats.sherlockcoolcats.model.CaseApplication
+import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
 import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModelFactory
 import com.google.android.gms.maps.model.LatLng
@@ -47,18 +48,20 @@ class UserInputFragment : Fragment(), MapInputFragment.MapInputDelegate {
             val caseTitle: String = add_edittext.text.toString()
             if (caseTitle.isNotEmpty() && latLng != null) {
                 val case = Case(caseTitle, latLng!!, false)
+                myLog("ME: $case")
                 //TODO: send case -> viewmodel
 //                viewModel.insert(case)
-                add_edittext.text = "".toEditable()
-                lat_textView.text = "Latitude"
-                long_textView.text = "Longitude"
-                mapInputFragment.clearPin()
+                clearInput()
             }
         }
     }
 
     override fun onPause() {
         super.onPause()
+        clearInput()
+    }
+
+    private fun clearInput() {
         add_edittext.text = "".toEditable()
         lat_textView.text = "Latitude"
         long_textView.text = "Longitude"
