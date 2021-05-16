@@ -65,8 +65,12 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
 //            }
 //        }
 //        list = caseViewModel.allCases.value!!
-        list.add(Case(1, "Paint off", 0.0, 0.0, false))
-        list.add(Case(2, "Haters gotta hate", -99.99, 99.99, true))
+        list.add(Case(1, "The Adventure of the Speckled Band", 0.0, 0.0, false))
+        list.add(Case(2, "The Red-Headed League", -99.99, 99.99, true))
+        list.add(Case(3, "The Adventure of the Dancing Men", -1.0, 1.0, false))
+        list.filter {
+            !it.solved
+        }
         adapter.updateList(list)
     }
 }

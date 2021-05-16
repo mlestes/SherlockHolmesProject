@@ -1,19 +1,15 @@
 package com.coolcats.sherlockcoolcats.view.adapter
 
-import android.app.Application
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.coolcats.sherlockcoolcats.R
 import com.coolcats.sherlockcoolcats.model.Case
 import com.coolcats.sherlockcoolcats.util.myLog
-import java.lang.Exception
-import java.util.logging.Logger
 
 class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : RecyclerView.Adapter<OpenCasesAdapter.OpenCaseViewHolder>() {
 
@@ -43,7 +39,6 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
                 this.findViewById<TextView>(R.id.case_title_textview).text = it.caseTitle
                 this.findViewById<TextView>(R.id.case_long_textview).text = it.longitude.toString()
                 this.findViewById<TextView>(R.id.case_lat_textview).text = it.latitude.toString()
-                this.findViewById<Switch>(R.id.case_solved_status_switch).isChecked = it.solved
 
                 myLog("Creating image of :>>" + it.latitude + "<<, >>" + it.longitude+"<<")
 
@@ -56,27 +51,34 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
 //                } catch (e: Exception) {
 //                    myLog(e.toString())}
 
-                this.findViewById<Button>(R.id.case_solved_button).setOnClickListener() {
-                   try {
-                       openCaseDelegate.setCaseStatus(openCaseList[position],true)
-                   } catch (e: Exception)
-                   {
-                       Log.d("JEFF says...",e.toString())
-                   }
+                this.findViewById<Button>(R.id.case_solved_button).setOnClickListener() {v ->
+                    if (confirmCaseSolvedsStatusChange(v.context,it))
+                    { openCaseDelegate.setCaseStatus(it,true) }
+                //                   try {
+//                       openCaseDelegate.setCaseStatus(openCaseList[position],true)
+//                   } catch (e: Exception)
+//                   {
+//                       Log.d("JEFF says...",e.toString())
+//                   }
                 }
-                this.findViewById<Switch>(R.id.case_solved_status_switch).setOnCheckedChangeListener {_, isChecked ->
-                    try {
-                        openCaseDelegate.setCaseStatus(openCaseList[position], isChecked)
-                        myLog("Switch tripped")
-                        //TODO:
-                    } catch (e: Exception)
-                    {
-                        myLog(e.toString())
-                    }
-                }
-                
             }
         }
+    }
+
+    fun confirmCaseSolvedsStatusChange(c:Context,case: Case): Boolean {
+        val builder = AlertDialog.Builder(c)
+        builder.setTitle(R.string.case_status_change_dialog_title)
+        builder.setMessage(R.string.case_status_change_dialog_message)
+        builder.setCancelable(true)
+        builder.setNeutralButton("Cancel") { dialog,which ->
+            //do nothing
+        }
+        builder.setPositiveButton(R.string.case_status_change_dialog_confirm_text) { dialog, which ->
+            myLog("builder.setPositiveButton>$which")
+            openCaseDelegate.setCaseStatus(case,true)
+        }
+        builder.show()
+        return false
     }
 
     override fun getItemCount(): Int {
