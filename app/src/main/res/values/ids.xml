@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="userInputFragment" type="id">user_input_fragment</item>
+    <item name="add_edittext" type="id">add_edittext</item>
+    <item name="addLocation_btn" type="id">addLocation_btn</item>
+    <item name="lat_textView" type="id">lat_textview</item>
+    <item name="long_textView" type="id">long_textView</item>
+</resources>
