@@ -32,13 +32,8 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
     override fun setCaseStatus(case: Case, status: Boolean) {
         try {
             case.solved = true
-//            caseViewModel.update(case)
-//            try{
-//                    if(!caseViewModel.allCases.value.isNullOrEmpty())   adapter.updateList(caseViewModel.allCases.value!!)
-//                }
-//             catch(e: Exception){ }
-
-            Toast.makeText(activity?.baseContext,case.caseNumber.toString() + ": " + case.caseTitle,Toast.LENGTH_SHORT).show()
+            //caseViewModel.update(case)
+            Toast.makeText(activity?.baseContext,case.caseNumber.toString() + ": " + case.caseTitle + " updated",Toast.LENGTH_SHORT).show()
             updateList()
         } catch (e: Exception){}
         //TODO("Not yet implemented")
@@ -69,17 +64,17 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
         list.add(Case(1, "The Adventure of the Speckled Band", 0.0, 0.0, false))
         list.add(Case(2, "The Red-Headed League", -99.99, 99.99, true))
         list.add(Case(3, "The Adventure of the Dancing Men", -1.0, 1.0, false))
-        list.add(Case(4, "A Case of Identity", -1.0, 1.0, false))
-        list.add(Case(5, "The Boscombe Valley Mystery", -1.0, 1.0, false))
-        list.add(Case(6, "The Adventure of the Copper Beeches", -1.0, 1.0, true))
-        list.add(Case(7, "The Adventure of the Stockbroker's Clerk", -1.0, 1.0, false))
-        list.add(Case(8, "The Adventure of the Greek Interpreter", -1.0, 1.0, false))
-        list.add(Case(9, "The Adventure of the Dying Detective", -1.0, 1.0, false))
+        list.add(Case(4, "A Case of Identity", -1.5, 3.0, false))
+        list.add(Case(5, "The Boscombe Valley Mystery", -4.0, -5.0, false))
+        list.add(Case(6, "The Adventure of the Copper Beeches", -7.0, 8.0, true))
+        list.add(Case(7, "The Adventure of the Stockbroker's Clerk", 5.0, 5.0, false))
+        list.add(Case(8, "The Adventure of the Greek Interpreter", -7.0, -4.67, false))
+        list.add(Case(9, "The Adventure of the Dying Detective", 8.78230, 7.1233, false))
         updateList()
     }
 
     private fun updateList() {
-        //val myNewList: MutableList<Case> = list.filter { it -> !it.solved }.toMutableList()
         adapter.updateList(list.filter { it -> !it.solved }.toMutableList())
+//        caseViewModel.allCases.value?.filter { it -> !it.solved }?.let { it1 -> adapter.updateList(it1.toMutableList()) } ?: {adapter.updateList(mutableListOf())}
     }
 }
