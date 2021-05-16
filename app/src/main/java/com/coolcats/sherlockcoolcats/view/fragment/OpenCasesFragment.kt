@@ -79,7 +79,7 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
     }
 
     private fun updateList() {
-        val myNewList: MutableList<Case> = list.filter { it -> !it.solved }.toMutableList()
-        adapter.updateList(myNewList)
+        //val myNewList: MutableList<Case> = list.filter { it -> !it.solved }.toMutableList()
+        adapter.updateList(list.filter { it -> !it.solved }.toMutableList())
     }
 }
