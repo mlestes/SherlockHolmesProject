@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.map_input_fragment.*
 
-class MapInputFragment(private val mapInputDelegate: MapInputFragment.MapInputDelegate) :
+class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
     Fragment(), LocationListener, GoogleMap.OnMapClickListener {
 
     //private class globals
@@ -37,8 +37,6 @@ class MapInputFragment(private val mapInputDelegate: MapInputFragment.MapInputDe
     //required for initializing input map
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
-        if (this.googleMap == null) myLog("ME: map null")
-        else myLog("ME: map data")
         this.googleMap.setOnMapClickListener(this)
         myLog("ME: Input Map is Ready")
     }
@@ -99,6 +97,7 @@ class MapInputFragment(private val mapInputDelegate: MapInputFragment.MapInputDe
     private fun updateLocation(userLocation: LatLng) {
         this.userLocation = userLocation
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
+        mapInputDelegate.getLatLng(this.userLocation!!)
         myLog("ME: Input Map updated to: $userLocation")
     }
 
