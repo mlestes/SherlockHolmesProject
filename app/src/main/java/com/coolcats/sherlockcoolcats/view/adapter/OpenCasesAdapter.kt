@@ -68,7 +68,7 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
     private fun confirmCaseSolvedsStatusChange(c:Context, case: Case) {
         val builder = AlertDialog.Builder(c)
         builder.setTitle(R.string.case_status_change_dialog_title)
-        builder.setMessage(c.getString(R.string.case_status_change_dialog_message, case.caseTitle))
+        builder.setMessage(c.getString(R.string.case_status_change_dialog_message, case.caseNumber, case.caseTitle))
         builder.setCancelable(true)
         builder.setNeutralButton("Cancel") { dialog,which ->
             //do nothing

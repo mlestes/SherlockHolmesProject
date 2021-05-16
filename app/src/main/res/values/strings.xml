@@ -6,6 +6,6 @@
     <string name="add_cases">Add Cases</string>
     <string name="solved">SET TO SOLVED</string>
     <string name="case_status_change_dialog_title">Case Status Change</string>
-    <string name="case_status_change_dialog_message">Set case: %1$s to solved?</string>
+    <string name="case_status_change_dialog_message">Set case#%1$d: %2$s to solved?</string>
     <string name="case_status_change_dialog_confirm_text">Solved</string>
 </resources>
