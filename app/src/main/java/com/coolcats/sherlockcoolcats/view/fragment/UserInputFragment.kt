@@ -1,10 +1,8 @@
 package com.coolcats.sherlockcoolcats.view.fragment
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Application
-import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +17,11 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.user_input_fragment.*
 
 class UserInputFragment : Fragment(), MapInputFragment.MapInputDelegate {
-    private val viewModel: CaseViewModel by viewModels{
+    private val viewModel: CaseViewModel by viewModels {
         CaseViewModelFactory((requireActivity().application as CaseApplication).repository)
     }
     private var latLng: LatLng? = null
+    private val mapInputFragment = MapInputFragment(this)
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -33,19 +32,27 @@ class UserInputFragment : Fragment(), MapInputFragment.MapInputDelegate {
         return inflater.inflate(R.layout.user_input_fragment, container, false)
     }
 
+    //convert string to Editable
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         childFragmentManager.beginTransaction()
-            .replace(R.id.map_frame, MapInputFragment(this))
+            .replace(R.id.map_frame, mapInputFragment)
             .commit()
 
         add_case_btn.setOnClickListener {
             val caseTitle: String = add_edittext.text.toString()
-            if(caseTitle.isNotEmpty() && latLng != null) {
+            if (caseTitle.isNotEmpty() && latLng != null) {
                 val case = Case(caseTitle, latLng!!, false)
                 //TODO: send case -> viewmodel
 //                viewModel.insert(case)
+                add_edittext.text = "".toEditable()
+                lat_textView.text = "Latitude"
+                long_textView.text = "Longitude"
+                mapInputFragment.clearPin()
             }
         }
     }

@@ -32,6 +32,10 @@ class MapInputFragment(private val mapInputDelegate: MapInputDelegate) :
         fun getLatLng(latLng: LatLng)
     }
 
+    fun clearPin(){
+        googleMap.clear()
+    }
+
     //required for initializing input map
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
