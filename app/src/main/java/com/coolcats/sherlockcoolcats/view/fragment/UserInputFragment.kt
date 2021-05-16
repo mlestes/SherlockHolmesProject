@@ -57,6 +57,14 @@ class UserInputFragment : Fragment(), MapInputFragment.MapInputDelegate {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        add_edittext.text = "".toEditable()
+        lat_textView.text = "Latitude"
+        long_textView.text = "Longitude"
+        mapInputFragment.clearPin()
+    }
+
     override fun getLatLng(latLng: LatLng) {
         this.latLng = latLng
         lat_textView.text = this.latLng!!.latitude.toString()
