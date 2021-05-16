@@ -59,8 +59,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/solved"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/location_clip_imageview"
+            tools:src="@tools:sample/avatars"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/teal_200"
+            android:elevation="2dp"
+            />
 
-
+        <Switch
+            android:id="@+id/case_solved_status_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Case Solved"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/case_lat_textview"
+            android:layout_margin="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

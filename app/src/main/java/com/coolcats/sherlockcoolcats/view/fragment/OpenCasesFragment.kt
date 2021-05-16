@@ -29,14 +29,14 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
 //    private val caseViewModel: CaseViewModel by viewModels()
     private var list: MutableList<Case> = mutableListOf()
 
-    override fun setOpenCaseToSolved(case: Case) {
+    override fun setCaseStatus(case: Case, status: Boolean) {
         try {
             case.solved = true
-            caseViewModel.update(case)
-            try{
-                    if(!caseViewModel.allCases.value.isNullOrEmpty())   adapter.updateList(caseViewModel.allCases.value!!)
-                }
-             catch(e: Exception){}
+//            caseViewModel.update(case)
+//            try{
+//                    if(!caseViewModel.allCases.value.isNullOrEmpty())   adapter.updateList(caseViewModel.allCases.value!!)
+//                }
+//             catch(e: Exception){ }
 
             Toast.makeText(activity?.baseContext,case.caseNumber.toString() + ": " + case.caseTitle,Toast.LENGTH_SHORT).show()
         } catch (e: Exception){}
@@ -59,14 +59,14 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
 //        else
 //            myLog("CaseList: ${caseViewModel.allCases.value!!.size.toString()}")
         myLog("Creating OpenCaseList in OpenCaseFragment")
-        caseViewModel.allCases.observe(requireActivity()) { list ->
-            list.let {
-                adapter.updateList(it)
-            }
-        }
+//        caseViewModel.allCases.observe(requireActivity()) { list ->
+//            list.let {
+//                adapter.updateList(it)
+//            }
+//        }
 //        list = caseViewModel.allCases.value!!
-//        list.add(Case(1, "Paint off", 0.0, 0.0, false))
-//        list.add(Case(2, "Haters gotta hate", -99.99, 99.99, true))
+        list.add(Case(1, "Paint off", 0.0, 0.0, false))
+        list.add(Case(2, "Haters gotta hate", -99.99, 99.99, true))
         adapter.updateList(list)
     }
 }
