@@ -52,8 +52,8 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
 //                    myLog(e.toString())}
 
                 this.findViewById<Button>(R.id.case_solved_button).setOnClickListener() {v ->
-                    if (confirmCaseSolvedsStatusChange(v.context,it))
-                    { openCaseDelegate.setCaseStatus(it,true) }
+                    confirmCaseSolvedsStatusChange(v.context,it)
+
                 //                   try {
 //                       openCaseDelegate.setCaseStatus(openCaseList[position],true)
 //                   } catch (e: Exception)
@@ -65,10 +65,10 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
         }
     }
 
-    fun confirmCaseSolvedsStatusChange(c:Context,case: Case): Boolean {
+    private fun confirmCaseSolvedsStatusChange(c:Context, case: Case) {
         val builder = AlertDialog.Builder(c)
         builder.setTitle(R.string.case_status_change_dialog_title)
-        builder.setMessage(R.string.case_status_change_dialog_message)
+        builder.setMessage(c.getString(R.string.case_status_change_dialog_message, case.caseTitle))
         builder.setCancelable(true)
         builder.setNeutralButton("Cancel") { dialog,which ->
             //do nothing
@@ -78,7 +78,6 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
             openCaseDelegate.setCaseStatus(case,true)
         }
         builder.show()
-        return false
     }
 
     override fun getItemCount(): Int {

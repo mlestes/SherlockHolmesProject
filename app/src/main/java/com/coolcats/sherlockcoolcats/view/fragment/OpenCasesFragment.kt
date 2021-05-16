@@ -39,6 +39,7 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
 //             catch(e: Exception){ }
 
             Toast.makeText(activity?.baseContext,case.caseNumber.toString() + ": " + case.caseTitle,Toast.LENGTH_SHORT).show()
+            updateList()
         } catch (e: Exception){}
         //TODO("Not yet implemented")
     }
@@ -74,8 +75,11 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
         list.add(Case(7, "The Adventure of the Stockbroker's Clerk", -1.0, 1.0, false))
         list.add(Case(8, "The Adventure of the Greek Interpreter", -1.0, 1.0, false))
         list.add(Case(9, "The Adventure of the Dying Detective", -1.0, 1.0, false))
+        updateList()
+    }
 
-        var myNewList: MutableList<Case> =list.filter {it-> !it.solved}.toMutableList()
+    private fun updateList() {
+        val myNewList: MutableList<Case> = list.filter { it -> !it.solved }.toMutableList()
         adapter.updateList(myNewList)
     }
 }
