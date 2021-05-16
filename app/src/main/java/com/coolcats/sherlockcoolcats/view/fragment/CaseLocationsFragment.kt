@@ -107,7 +107,7 @@ class CaseLocationsFragment : Fragment(), LocationListener, CaseAdapter.SolvedCa
 
     private fun navigateToAndMark(case: Case) {
         googleMap.clear()
-        googleMap.addMarker(MarkerOptions().position(case.latLong).title(case.caseTitle))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLong))
+        googleMap.addMarker(MarkerOptions().position(case.latLng).title(case.caseTitle))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLng))
     }
 }
