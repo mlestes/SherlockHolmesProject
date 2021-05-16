@@ -115,7 +115,10 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
         this.userLocation = userLocation
         my_location.visibility = View.VISIBLE
         val latLng = LatLng(userLocation.latitude, userLocation.longitude)
-        googleMap.addMarker(MarkerOptions().position(latLng).title("Sherlock"))
+        googleMap.addMarker(
+            MarkerOptions().position(latLng).title("Sherlock")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        )
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         //Log.d("TAG_X", "MapReady...!")
         myLog("MapReady...!")
@@ -137,10 +140,16 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
     private fun navigateToAndMark(case: Case) {
 
         googleMap.clear()
-        googleMap.addMarker(
-            MarkerOptions().position(case.latLng).title(case.caseTitle)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-        )
+        if (case.solved)
+            googleMap.addMarker(
+                MarkerOptions().position(case.latLng).title(case.caseTitle)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+            )
+        else
+            googleMap.addMarker(
+                MarkerOptions().position(case.latLng).title(case.caseTitle)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            )
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLng))
 
     }
