@@ -2,7 +2,6 @@ package com.coolcats.sherlockcoolcats.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -12,17 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearSnapHelper
 import com.coolcats.sherlockcoolcats.R
-import com.coolcats.sherlockcoolcats.db.CaseDao
-import com.coolcats.sherlockcoolcats.db.CaseRepository
 import com.coolcats.sherlockcoolcats.model.Case
 import com.coolcats.sherlockcoolcats.util.myLog
-import com.coolcats.sherlockcoolcats.view.adapter.CaseAdapter
 import com.coolcats.sherlockcoolcats.view.adapter.SolvedCaseAdapter
 import com.coolcats.sherlockcoolcats.view.adapter.UnsolvedCaseAdapter
-import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -30,24 +23,21 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.case_item_layout.view.*
 import kotlinx.android.synthetic.main.fragment_case_locations.*
 
 
-
-class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.SolCaseDelegate, UnsolvedCaseAdapter.UnSolvedCaseDelegate {
+class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.SolCaseDelegate,
+    UnsolvedCaseAdapter.UnSolvedCaseDelegate {
 
 
     private lateinit var googleMap: GoogleMap
 
     private lateinit var locationManager: LocationManager
 
-    private lateinit var adapter : SolvedCaseAdapter
-   // private lateinit var  unsolvedAdapter : UnsolvedCaseAdapter
+    private lateinit var adapter: SolvedCaseAdapter
+
+    // private lateinit var  unsolvedAdapter : UnsolvedCaseAdapter
     private val solveList = ArrayList<Case>()
-
-
-
 
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -58,9 +48,11 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
         this.googleMap = googleMap
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_case_locations, container, false)
 
 
@@ -73,24 +65,22 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
             updateLocation(userLocation)
         }
 
-        locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
 
-         adapter= SolvedCaseAdapter(solveList)
-       //  unsolvedAdapter = UnsolvedCaseAdapter(solveList)
-
+        adapter = SolvedCaseAdapter(solveList)
+        //  unsolvedAdapter = UnsolvedCaseAdapter(solveList)
 
 
         case_recyclerview.adapter = adapter
 
 
-    //    unsolved_recyclerview.adapter = unsolvedAdapter
-
-
+        //    unsolved_recyclerview.adapter = unsolvedAdapter
 
 
 //        val list = mutableListOf<Case>(
@@ -113,6 +103,7 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
             this
         )
     }
+
     private lateinit var userLocation: Location
 
     private fun updateLocation(userLocation: Location) {
@@ -135,14 +126,17 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
 
         Toast.makeText(requireContext(), case.caseTitle, Toast.LENGTH_SHORT).show()
         navigateToAndMark(case)
-       // adapter.caseList.set(case.caseNumber,case)
+        // adapter.caseList.set(case.caseNumber,case)
     }
 
     private fun navigateToAndMark(case: Case) {
 
         googleMap.clear()
-        googleMap.addMarker(MarkerOptions().position(case.latLong).title(case.caseTitle).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLong))
+        googleMap.addMarker(
+            MarkerOptions().position(case.latLng).title(case.caseTitle)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        )
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLng))
 
     }
 
