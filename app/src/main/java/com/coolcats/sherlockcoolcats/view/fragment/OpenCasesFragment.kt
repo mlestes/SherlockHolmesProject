@@ -68,9 +68,14 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
         list.add(Case(1, "The Adventure of the Speckled Band", 0.0, 0.0, false))
         list.add(Case(2, "The Red-Headed League", -99.99, 99.99, true))
         list.add(Case(3, "The Adventure of the Dancing Men", -1.0, 1.0, false))
-        list.filter {
-            !it.solved
-        }
-        adapter.updateList(list)
+        list.add(Case(4, "A Case of Identity", -1.0, 1.0, false))
+        list.add(Case(5, "The Boscombe Valley Mystery", -1.0, 1.0, false))
+        list.add(Case(6, "The Adventure of the Copper Beeches", -1.0, 1.0, true))
+        list.add(Case(7, "The Adventure of the Stockbroker's Clerk", -1.0, 1.0, false))
+        list.add(Case(8, "The Adventure of the Greek Interpreter", -1.0, 1.0, false))
+        list.add(Case(9, "The Adventure of the Dying Detective", -1.0, 1.0, false))
+
+        var myNewList: MutableList<Case> =list.filter {it-> !it.solved}.toMutableList()
+        adapter.updateList(myNewList)
     }
 }
