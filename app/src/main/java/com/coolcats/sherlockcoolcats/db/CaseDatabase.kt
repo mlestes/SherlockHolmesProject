@@ -27,7 +27,6 @@ public abstract class CaseDatabase : RoomDatabase() {
                     //Adding a few cases
 //                    var case = Case(1,  "A Scandal in Bohemia", LatLng(33.9083264, -84.4693504), false)
 //                    caseDao.insert(case)
-
                     //ToDo: Add your own case
                     //case = Case()
                     //caseDao.insert()

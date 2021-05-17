@@ -15,6 +15,8 @@ import androidx.lifecycle.observe
 import com.coolcats.sherlockcoolcats.model.CaseApplication
 import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.view.adapter.MainViewPagerAdapter
+import com.coolcats.sherlockcoolcats.view.adapter.OpenCasesAdapter
+import com.coolcats.sherlockcoolcats.view.fragment.OpenCasesFragment
 import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
 import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,8 +24,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: MainViewPagerAdapter
-
+    private lateinit var openCasesAdapter: OpenCasesAdapter
     private lateinit var locationManager: LocationManager
+    private val openCasesFragment = OpenCasesFragment()
 
     //To create the ViewModel we used the viewModels delegate, passing in
     //an instance of our CaseViewModelFactory which is constructed
@@ -39,17 +42,18 @@ class MainActivity : AppCompatActivity() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         adapter = MainViewPagerAdapter(supportFragmentManager)
+        openCasesAdapter = OpenCasesAdapter(openCasesFragment)
         main_viewpager.adapter = adapter
+        main_viewpager.offscreenPageLimit = 2
 
         //Added an observer on the LiveData returned by getAllCases
         //The onChange() method fires when the observed data changes
         //and the activity is in the foreground.
-        /*caseViewModel.allCases.observe(owner = this){ cases ->
-            //Update the cached cody of the words in the adapter
-            //ToDo need the  CaseListAdapter from the RecycleView Piece
-            //cases.let{ adapter.submitList(it)}
-        }
-        */
+//        caseViewModel.allCases.observe(owner = this){ cases ->
+//            //Update the cached cody of the words in the adapter
+//            //ToDo need the  CaseListAdapter from the RecycleView Piece
+//            cases.let{ openCasesAdapter.updateList(it)}
+//        }
 
         main_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
