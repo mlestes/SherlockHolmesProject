@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/case_number_textview"
+            app:layout_constraintVertical_weight="1"
             android:background="@color/purple_700"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
@@ -24,6 +25,7 @@
             />
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/case_title_textview"
+            app:layout_constraintVertical_weight="1"
             android:background="@color/purple_700"
             android:textColor="@color/white"
             android:layout_width="0dp"
@@ -69,7 +71,6 @@
             android:padding="8dp"
             android:text="@string/solved"
             android:textColor="@color/white"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
