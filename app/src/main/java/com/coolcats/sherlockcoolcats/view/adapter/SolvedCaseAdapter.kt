@@ -38,11 +38,10 @@ class SolvedCaseAdapter(private val solCaseDelegate: SolCaseDelegate) :
         var item = casesList[position]
         if (item.solved == true) {
             holder.itemView.case_number_textview.text = item.caseNumber.toString()
-                .also { holder.itemView.case_number_textview.setBackgroundResource(R.drawable.ic_solved) }
-
+                .also { holder.itemView.bg.setImageResource(R.drawable.ic_closed_case)}
         } else
             holder.itemView.case_number_textview.text = item.caseNumber.toString()
-                .also { holder.itemView.case_number_textview.setBackgroundResource(R.drawable.ic_unsolved) }
+                .also { holder.itemView.bg.setImageResource(R.drawable.ic_open_case) }
         holder.itemView.setOnClickListener {
             solCaseDelegate.openSolvedCase(item)
         }

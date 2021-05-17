@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="4dp"
     android:layout_marginTop="4dp"
-    android:background="#8BC34A">
+    android:background="#663311">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -21,6 +21,8 @@
         android:layout_margin="@dimen/std_dp"
         android:hint="@string/add_case_name"
         android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textColorHint="#aaaaaa"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@color/purple_200"
+        android:background="#554433"
         android:padding="8dp"
         android:text="@string/submit_case"
         app:layout_constraintBottom_toBottomOf="@id/guideline"
@@ -43,6 +45,7 @@
         android:layout_margin="8dp"
         android:text="@string/latitude"
         android:textSize="24sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/long_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +58,7 @@
         android:layout_margin="8dp"
         android:text="@string/longitude"
         android:textSize="24sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/add_case_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
