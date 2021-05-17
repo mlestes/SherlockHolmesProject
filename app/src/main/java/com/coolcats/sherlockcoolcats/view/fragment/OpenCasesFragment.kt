@@ -72,7 +72,7 @@ class OpenCasesFragment : Fragment(), OpenCasesAdapter.OpenCaseDelegate {
         list.add(Case(9, "The Adventure of the Dying Detective", 8.78230, 7.1233, false))
         updateList()
     }
-    
+
     private fun updateList() {
         adapter.updateList(list.filter { it -> !it.solved }.toMutableList())
 //        caseViewModel.allCases.value?.filter { it -> !it.solved }?.let { it1 -> adapter.updateList(it1.toMutableList()) } ?: {adapter.updateList(mutableListOf())}
