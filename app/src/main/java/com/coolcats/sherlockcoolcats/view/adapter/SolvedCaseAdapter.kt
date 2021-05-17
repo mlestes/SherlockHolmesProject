@@ -6,20 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.coolcats.sherlockcoolcats.R
-import com.coolcats.sherlockcoolcats.R.drawable
-import com.coolcats.sherlockcoolcats.model.Case
-import com.google.android.gms.maps.model.LatLng
+import com.coolcats.sherlockcoolcats.model.Cases
 import kotlinx.android.synthetic.main.case_item_layout.view.*
-import kotlinx.android.synthetic.main.unsolved_case_item_layout.view.*
 
-class SolvedCaseAdapter(private var caseList: List<Case>) : RecyclerView.Adapter<SolvedCaseAdapter.SolvedViewHolder>() {
+class SolvedCaseAdapter(private var casesList: List<Cases>) : RecyclerView.Adapter<SolvedCaseAdapter.SolvedViewHolder>() {
 
 
 
 
 
     interface SolCaseDelegate{
-        fun openSolvedCase(case: Case)
+        fun openSolvedCase(cases: Cases)
     }
 
 
@@ -30,11 +27,11 @@ class SolvedCaseAdapter(private var caseList: List<Case>) : RecyclerView.Adapter
         return SolvedViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int = caseList.size
+    override fun getItemCount(): Int = casesList.size
 
     @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: SolvedViewHolder, position: Int) {
-        var item =caseList[position]
+        var item =casesList[position]
                if(item.solved == true)
                {
                    holder.itemView.case_number_textview.text= item.caseNumber.toString().also { holder.itemView.case_number_textview.setBackgroundResource(R.drawable.ic_solved) }

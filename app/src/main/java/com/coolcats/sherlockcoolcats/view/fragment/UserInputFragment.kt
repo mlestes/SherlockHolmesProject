@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.coolcats.sherlockcoolcats.R
-import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.Cases
 import com.coolcats.sherlockcoolcats.model.CaseApplication
 import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.viewmodel.CaseViewModel
@@ -47,10 +47,10 @@ class UserInputFragment : Fragment(), MapInputFragment.MapInputDelegate {
         add_case_btn.setOnClickListener {
             val caseTitle: String = add_edittext.text.toString()
             if (caseTitle.isNotEmpty() && latLng != null) {
-                val case = Case(caseTitle, latLng!!, false)
+                val case = Cases(caseTitle, latLng!!, false)
                 myLog("ME: $case")
                 //TODO: send case -> viewmodel
-//                viewModel.insert(case)
+                viewModel.insert(case)
                 clearInput()
             }
         }

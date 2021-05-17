@@ -1,7 +1,7 @@
 package com.coolcats.sherlockcoolcats.db
 
 import androidx.annotation.WorkerThread
-import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.Cases
 import kotlinx.coroutines.flow.Flow
 
 /*
@@ -19,17 +19,17 @@ import kotlinx.coroutines.flow.Flow
 
 class CaseRepository(private val caseDao: CaseDao) {
 
-    val allCases : Flow<MutableList<Case>> = caseDao.getAllCases()
+    val allCases : Flow<MutableList<Cases>>get() = caseDao.getAllCases()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(case: Case) {
-        caseDao.insert(case)
+    suspend fun insert(cases: Cases) {
+        caseDao.insert(cases)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun update(case : Case){
-        caseDao.updateCase(case)
+    suspend fun update(cases : Cases){
+        caseDao.updateCase(cases)
     }
 }

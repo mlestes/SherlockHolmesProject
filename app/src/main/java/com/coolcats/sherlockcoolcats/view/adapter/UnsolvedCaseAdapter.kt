@@ -5,23 +5,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.coolcats.sherlockcoolcats.R
-import com.coolcats.sherlockcoolcats.model.Case
-import kotlinx.android.synthetic.main.open_cases_fragment_layout.*
+import com.coolcats.sherlockcoolcats.model.Cases
 import kotlinx.android.synthetic.main.unsolved_case_item_layout.view.*
 
-class UnsolvedCaseAdapter(private var caseList: List<Case>):
+class UnsolvedCaseAdapter(private var casesList: List<Cases>):
     RecyclerView.Adapter<UnsolvedCaseAdapter.ClosedViewHolder>() {
 
 
 
     interface UnSolvedCaseDelegate{
-        fun closedSolvedCase(case: Case)
+        fun closedSolvedCase(cases: Cases)
     }
 
 
     // any error delete this class
-    fun updateList(list: MutableList<Case>){
-        this.caseList = list
+    fun updateList(list: MutableList<Cases>){
+        this.casesList = list
         notifyDataSetChanged()
     }
 
@@ -35,11 +34,11 @@ class UnsolvedCaseAdapter(private var caseList: List<Case>):
         return ClosedViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int= caseList.size
+    override fun getItemCount(): Int= casesList.size
 
     override fun onBindViewHolder(holder: ClosedViewHolder, position: Int) {
-        var item =caseList[position]
-        if(caseList[position].solved == false)
+        var item =casesList[position]
+        if(casesList[position].solved == false)
            // holder.itemView.unsolved_case_number_textview.text= caseList[position].caseNumber.toString()
             holder.itemView.unsolved_case_number_textview.text= item.caseNumber.toString()
 

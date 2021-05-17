@@ -8,19 +8,19 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.coolcats.sherlockcoolcats.R
-import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.Cases
 import java.lang.Exception
 
 class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : RecyclerView.Adapter<OpenCasesAdapter.OpenCaseViewHolder>() {
 
-    var openCaseList: List<Case> = mutableListOf()
+    var openCasesList: List<Cases> = mutableListOf()
 
     interface OpenCaseDelegate{
-        fun setOpenCaseToSolved(case: Case)
+        fun setOpenCaseToSolved(cases: Cases)
     }
 
-    fun updateList(list: List<Case>){
-        this.openCaseList = list
+    fun updateList(list: List<Cases>){
+        this.openCasesList = list
         notifyDataSetChanged()
     }
 
@@ -32,16 +32,16 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
     }
 
     override fun onBindViewHolder(holder: OpenCaseViewHolder, position: Int) {
-        val openCase: Case = openCaseList[position]
-        openCase.let{
+        val openCases: Cases = openCasesList[position]
+        openCases.let{
             holder.itemView.apply {
                 this.findViewById<TextView>(R.id.case_number_textview).text = it.caseNumber.toString()
                 this.findViewById<TextView>(R.id.case_title_textview).text = it.caseTitle
-                this.findViewById<TextView>(R.id.case_long_textview).text = it.latLng.longitude.toString()
-                this.findViewById<TextView>(R.id.case_lat_textview).text = it.latLng.latitude.toString()
+                this.findViewById<TextView>(R.id.case_long_textview).text = it.longitude.toString()
+                this.findViewById<TextView>(R.id.case_lat_textview).text = it.latitude.toString()
                 this.findViewById<Button>(R.id.case_solved_button).setOnClickListener() {
                    try {
-                       openCaseDelegate.setOpenCaseToSolved(openCaseList[position])
+                       openCaseDelegate.setOpenCaseToSolved(openCasesList[position])
 
                    } catch (e: Exception)
                    {
@@ -53,6 +53,6 @@ class OpenCasesAdapter(private val openCaseDelegate: OpenCaseDelegate) : Recycle
     }
 
     override fun getItemCount(): Int {
-        return openCaseList.size
+        return openCasesList.size
     }
 }

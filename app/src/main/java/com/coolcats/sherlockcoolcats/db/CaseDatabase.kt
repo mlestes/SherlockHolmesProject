@@ -3,12 +3,11 @@ package com.coolcats.sherlockcoolcats.db
 import android.content.Context
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.coolcats.sherlockcoolcats.model.Case
-import com.google.android.gms.maps.model.LatLng
+import com.coolcats.sherlockcoolcats.model.Cases
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Case::class], version = 1)
+@Database(entities = [Cases::class], version = 1)
 @TypeConverters(Converters::class)
 public abstract class CaseDatabase : RoomDatabase() {
 

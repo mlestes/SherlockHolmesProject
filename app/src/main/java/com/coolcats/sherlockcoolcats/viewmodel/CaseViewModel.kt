@@ -3,7 +3,7 @@ package com.coolcats.sherlockcoolcats.viewmodel
 
 import androidx.lifecycle.*
 import com.coolcats.sherlockcoolcats.db.CaseRepository
-import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.Cases
 import kotlinx.coroutines.launch
 
 class CaseViewModel(private val repository: CaseRepository) : ViewModel() {
@@ -12,22 +12,22 @@ class CaseViewModel(private val repository: CaseRepository) : ViewModel() {
     //- We can put an observer on the data (instead of polling for changes)
     // and only update the UI when the data actually changes.
     // -The respository is completely separated from the UI through the ViewModel
-    val allCases: LiveData<MutableList<Case>> = repository.allCases.asLiveData()
+    val allCases: LiveData<MutableList<Cases>> = repository.allCases.asLiveData()
 
 
     /*
      * Launching a new coroutine to insert the data in a non-blocking manner
      */
-    fun insert(case: Case) = viewModelScope.launch {
+    fun insert(cases: Cases) = viewModelScope.launch {
 
-        repository.insert(case)
+        repository.insert(cases)
     }
 
     /*
      * Launching a new coroutine to update the data in a non-blocking manner
      */
-    fun update(case: Case) = viewModelScope.launch {
-        repository.update(case)
+    fun update(cases: Cases) = viewModelScope.launch {
+        repository.update(cases)
     }
 
 }

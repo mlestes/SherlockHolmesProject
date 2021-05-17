@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.coolcats.sherlockcoolcats.R
-import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.Cases
 import com.coolcats.sherlockcoolcats.util.myLog
 import com.coolcats.sherlockcoolcats.view.adapter.SolvedCaseAdapter
 import com.coolcats.sherlockcoolcats.view.adapter.UnsolvedCaseAdapter
@@ -37,7 +37,7 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
     private lateinit var adapter: SolvedCaseAdapter
 
     // private lateinit var  unsolvedAdapter : UnsolvedCaseAdapter
-    private val solveList = ArrayList<Case>()
+    private val solveList = ArrayList<Cases>()
 
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -130,33 +130,35 @@ class CaseLocationsFragment : Fragment(), LocationListener, SolvedCaseAdapter.So
 
     }
 
-    override fun openSolvedCase(case: Case) {
+    override fun openSolvedCase(cases: Cases) {
 
-        Toast.makeText(requireContext(), case.caseTitle, Toast.LENGTH_SHORT).show()
-        navigateToAndMark(case)
+        Toast.makeText(requireContext(), cases.caseTitle, Toast.LENGTH_SHORT).show()
+        navigateToAndMark(cases)
         // adapter.caseList.set(case.caseNumber,case)
     }
 
-    private fun navigateToAndMark(case: Case) {
+    private fun navigateToAndMark(cases: Cases) {
 
         googleMap.clear()
-        if (case.solved)
+        if (cases.solved)
             googleMap.addMarker(
-                MarkerOptions().position(case.latLng).title(case.caseTitle)
+                MarkerOptions().position(LatLng(cases.latitude, cases.longitude))
+                    .title(cases.caseTitle)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
             )
         else
             googleMap.addMarker(
-                MarkerOptions().position(case.latLng).title(case.caseTitle)
+                MarkerOptions().position(LatLng(cases.latitude, cases.longitude))
+                    .title(cases.caseTitle)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
             )
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(case.latLng))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(cases.latitude, cases.longitude)))
 
     }
 
-    override fun closedSolvedCase(case: Case) {
-        Toast.makeText(requireContext(), case.caseTitle, Toast.LENGTH_SHORT).show()
-        navigateToAndMark(case)
+    override fun closedSolvedCase(cases: Cases) {
+        Toast.makeText(requireContext(), cases.caseTitle, Toast.LENGTH_SHORT).show()
+        navigateToAndMark(cases)
     }
 
 

@@ -2,7 +2,7 @@ package com.coolcats.sherlockcoolcats.db
 
 import androidx.room.*
 import androidx.room.Dao
-import com.coolcats.sherlockcoolcats.model.Case
+import com.coolcats.sherlockcoolcats.model.Cases
 import kotlinx.coroutines.flow.Flow
 
 /*
@@ -22,23 +22,23 @@ interface CaseDao {
 
     //Find all cases in the table
     @Query("SELECT * FROM case_table")
-    fun getAllCases(): Flow<MutableList<Case>>
+    fun getAllCases(): Flow<MutableList<Cases>>
 
     //Find all cases that are in open status
     @Query("SELECT * FROM case_table WHERE case_status = 1")
-    suspend fun getAllOpenCases(): Flow<MutableList<Case>>
+    suspend fun getAllOpenCases(): MutableList<Cases>
 
     //Find all cases that are in closed status
     @Query("SELECT * FROM case_table WHERE case_status = 0")
-    suspend fun getAllClosedCases(): Flow<MutableList<Case>>
+    suspend fun getAllClosedCases(): MutableList<Cases>
 
     //Allows you to add a new case to the database
     @Insert
-    suspend fun insert(case : Case)
+    suspend fun insert(cases : Cases)
 
     //Allows you to update the case
     @Update
-    suspend fun  updateCase(case : Case)
+    suspend fun  updateCase(cases : Cases)
 
     //Allows the case_table to be cleared
     @Query("DELETE FROM case_table")
